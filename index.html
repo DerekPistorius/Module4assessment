@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Back End Assessment</title>
+</head>
+
+<body class="container">
+  <button id="complimentButton">Get a compliment</button>
+
+  <body class="container">
+    <button id="fortuneButton">Get your fortune!</button>
+
+    <table border="2">
+      <tr>
+        <th>Row ID</th>
+        <th>Name</th>
+        <th>Input</th>
+        <th>Post</th>
+        <th>Put</th>
+        <th>Delete</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td id="id1"></td>
+        <td><input id="userInput1" type=”text”></td>
+        <td><button onclick="post1F()" id="post1" type="button">Post</button></td>
+        <td><button onclick="put1F()" id="put1" type="button">Put</button></td>
+        <td><button onclick="delete1F()" id="delete1" type="button">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td id="id2"></td>
+        <td><input id="userInput2" type=”text”></td>
+        <td><button onclick="post2F()" id="post2" type="button">Post</button></td>
+        <td><button onclick="put2F()" id="put2" type="button">Put</button></td>
+        <td><button onclick="delete2F()" id="delete2" type="button">Delete</button></td>
+      </tr>
+    </table>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      // fortune button handler
+      document.getElementById("fortuneButton").onclick = function () {
+        axios.get("http://localhost:4000/api/fortune/")
+          .then(function (response) {
+            const data = response.data;
+            alert(data);
+          });
+      };
+
+      // compliment buutton handler
+      document.getElementById("complimentButton").onclick = function () {
+        axios.get("http://localhost:4000/api/compliment/")
+          .then(function (response) {
+            const data = response.data;
+            alert(data);
+          });
+      };
+      function post1F() {
+        const uI1 = document.getElementById("userInput1").value;
+        // posting to the server the user input (uI1)
+        axios.post("http://localhost:4000/api/post", {
+          //data or body
+          id: 1,
+          name: uI1
+        }).then((response) => {
+          const my_td = document.getElementById("id1")
+          const name1 = response.data
+          my_td.innerText = name1
+        })  
+      }
+ 
+      function post2F() {
+        const uI2 = document.getElementById("userInput2").value;
+        axios.post("http://localhost:4000/api/post", {
+          id: 2,
+          name: uI2
+        }).then((response) => {
+          const my_td = document.getElementById("id2")
+          const name2 = response.data
+          my_td.innerText = name2
+        })  
+      }
+
+      function put1F() {
+        const uI1 = document.getElementById("userInput1").value;
+        axios.put("http://localhost:4000/api/put", {
+          id: 1,
+          name: uI1
+        }).then((response) => {
+          const my_td = document.getElementById("id1")
+          const name1 = response.data
+          my_td.innerText = name1
+        })  
+      }
+
+      function put2F() {
+        const uI2 = document.getElementById("userInput2").value;
+        axios.put("http://localhost:4000/api/put", {
+          id: 2,
+          name: uI2
+        }).then((response) => {
+          const my_td = document.getElementById("id2")
+          const name2 = response.data
+          my_td.innerText = name2
+        })  
+      }
+
+      function delete1F() {
+        const uI1 = document.getElementById("userInput1").value;
+        axios.delete("http://localhost:4000/api/delete", {
+          id: 1,
+          name: uI1
+        }).then((response) => {
+          const my_td = document.getElementById("id1")
+          const name1 = response.data
+          my_td.innerText = name1
+        })  
+      }
+
+      function delete2F() {
+        const uI1 = document.getElementById("userInput1").value;
+        axios.delete("http://localhost:4000/api/delete", {
+          id: 2,
+          name: uI1
+        }).then((response) => {
+          const my_td = document.getElementById("id2")
+          const name2 = response.data
+          my_td.innerText = name2
+        })  
+      }
+
+
+    </script>
